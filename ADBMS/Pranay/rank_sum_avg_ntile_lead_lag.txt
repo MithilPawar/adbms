@@ -1,0 +1,100 @@
+Create table emp(
+    id int primary key,
+    empname varchar(20),
+    dept varchar(20),
+    salary int,
+    gender varchar(20)
+    
+);
+
+
+#"inserting values in emp table"
+
+insert into emp values(1,'pranay','hr',20000,'m');
+insert into emp values(2,'ruchita','marketing',50000,'f');
+insert into emp values(3,'rasika','hr',22000,'f');
+insert into emp values(4,'mithil','sales',28000,'m');
+insert into emp values(5,'om','sales',25625,'m');
+insert into emp values(6,'sharad','marketing',23000,'m');
+insert into emp values(7,'bhavesh','test',10000,'m');
+insert into emp values(8,'tanvi','test',22050,'f');
+insert into emp values(9,'priti','hr',22800,'f');
+insert into emp values(10,'raj','sales',28625,'m');
+
+#"rank() function"
+select id,empname,dept,salary,rank() over(order by salary desc) as ranks from emp;
+
+_____________________________________________
+#" dense_rank() "
+select id,empname,dept,salary,rank() over(order by salary desc) as ranks,
+    dense_rank() over(order by salary desc) as dense_ranks from emp;
+
+select * from(select id,empname,dept,salary,dense_rank() over(partition by dept order by salary asc)
+    as dense_rank from emp a )where dense_rank=1;
+____________________________________________________
+#"ntile()"
+select id,empname,dept,salary,ntile(2) over(order by salary desc) as ntile from emp;
+_______________________________________
+
+#" row_number() "
+select id,empname,dept,salary,rank() over(order by salary desc) as ranks,
+    dense_rank() over(order by salary desc) as dense_ranks,
+    row_number() over(order by salary desc) as row_number from emp;
+___________________________________________
+# " first_value()"
+select id,empname,dept,salary,first_value(salary) ignore nulls
+    over(partition by dept order by salary asc)as lowest_in_dept from emp;
+_________________________________
+# " last_value()"
+select id,empname,dept,salary,first_value(salary) ignore nulls
+    over(partition by dept order by salary asc)as highest_in_dept from emp;
+____________________________________________
+#" percent_rank()"
+select id,empname,dept,salary,percent_rank() over(order by salary) as percent_rank from emp;
+
+***************************************************************************************
+
+#"lead/lag "
+
+    Create table empsales(
+    id int primary key,
+    deptid int,
+    pid int,
+    qty int,
+    sales int,
+    sales_year int
+    
+);
+
+insert into empsales values(1,1,100,20,2000,2002);
+insert into empsales values(2,1,100,24,2000,2003);
+insert into empsales values(3,2,100,25,2000,2004);
+insert into empsales values(4,1,200,27,2000,2005);
+insert into empsales values(5,3,200,50,2000,2006);
+insert into empsales values(6,2,300,14,2000,2007);
+insert into empsales values(7,2,300,19,2000,2008);
+insert into empsales values(8,3,400,20,2000,2009);
+insert into empsales values(9,1,400,28,2000,2010);
+insert into empsales values(10,4,200,10,2000,2011);
+insert into empsales values(11,4,300,22,2000,2012);
+
+#"lead()"
+select id,deptid,pid,sales_year,sales,lead(sales) over(order by sales_year asc) 
+    as nexr_year from empsales;
+___________________________________________
+#"lag()"
+    select id,deptid,pid,sales_year,sales,lag(sales) over(order by sales_year asc) 
+    as privious_year from empsales;
+___________________________________________
+#" first and last"
+select id,deptid,sales,
+    min(sales)keep (dense_rank first order by sales)
+    over(partition by deptid)as lowest,
+    max(sales)keep (dense_rank last order by sales)
+    over(partition by deptid)as highest from empsales order by deptid,sales;
+____________________________________________
+#" sum()"
+    select id,deptid,sum(sales) over (partition by deptid) as total_sales from empsales;
+__________________________________________
+# "avg "
+    select id,deptid,avg(sales) over (partition by deptid) as avg_sales from empsales;

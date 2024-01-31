@@ -1,0 +1,134 @@
+Abstract Data type
+CREATE OR REPLACE TYPE Address AS OBJECT ( 
+    address1 VARCHAR(255), 
+    address2 VARCHAR(255), 
+    StateS VARCHAR(50), 
+    city VARCHAR(50), 
+    pincode VARCHAR(10) 
+);
+CREATE TABLE Customer ( 
+    customer_id INT PRIMARY KEY, 
+    customer_name VARCHAR(100), 
+    customer_address Address 
+);
+#insert
+INSERT INTO CUSTOMER VALUES(1,'OMKAR',Address('GK Road','MG road','MAHARASTRA','Mumbai','415804'))
+INSERT INTO CUSTOMER VALUES(2,'Mithil',Address('GK','MG road','MAHARASTRA','Chennai','415804'))
+INSERT INTO CUSTOMER VALUES(3,'Bhavesh',Address('GK Road','MG road','MAHARASTRA','Mumbai','415804'))
+
+#select
+select customer_id,customer_name,c.customer_address.address1,c.customer_address.address2,c.customer_address.States,c.customer_address.city,c.customer_address.pincode from customer c;
+
+Partition range
+create table Passenger 
+( 
+    PID int, 
+    PName varchar(50), 
+    Address Varchar(50), 
+    Destination varchar(50), 
+    Age int 
+) 
+Partition by range(age) 
+(partition p1 values less than(12), 
+    partition p2 values less than(40), 
+    partition p3 values less than(60), 
+    partition p4 values less than(75), 
+    partition p5 values less than(MAXVALUE)   
+)
+Selecting partition
+
+select * from passenger partition(p1)
+
+#####-----FIRST & LAST-----#####
+
+CREATE TABLE emp (
+  empno NUMBER,
+  ename VARCHAR2(50),
+  job VARCHAR2(50),
+  sal NUMBER,
+  deptno NUMBER,
+  sales_year Number,
+  sales Number
+);
+
+INSERT INTO emp VALUES (101, 'John', 'Manager', 5000, 10,2000,500);
+INSERT INTO emp VALUES (102, 'Alice', 'Analyst', 4500, 20,2001,800);
+INSERT INTO emp VALUES (103, 'Bob', 'Clerk', 3000, 10,2002,300);
+INSERT INTO emp VALUES (104, 'Charlie', 'Manager', 5500, 20,2004,900);
+INSERT INTO emp VALUES (105, 'David', 'Analyst', 4800, 10,2005,700);
+
+Lead lag
+select empno,deptno,sales_year,sales,lead(sales) over (order by sales_year asc) as next_year_sale from emp;
+select empno,deptno,sales_year,sales,lag(sales) over (order by sales_year asc) as previous_year_sale from emp;
+First Last
+select empno,deptno,sales,min(sales) keep (dense_rank first order by sales) over (partition by deptno) as First from emp order by deptno,sales;
+
+select empno,deptno,sales,max(sales) keep (dense_rank last order by sales) over (partition by deptno) as Last from emp order by deptno,sales;
+
+Analytical operations 
+Slicing
+select i.item_name,l.city,t.quarter,s.units_sold from salesfact s
+
+left join items i on s.item_key=i.item_key
+
+left join loc l on s.loc_key=l.loc_key
+
+left join Stime t on s.time_key=t.time_key
+
+where t.quarter=1;
+
+Dicing
+select i.item_name,l.city,t.quarter,sum(s.units_sold) from salesfact s
+left join items i on s.item_key=i.item_key
+left join loc l on s.loc_key=l.loc_key
+left join Stime t on s.time_key=t.time_key
+where (i.item_name in ('GoProHero','Caravaan2') and l.city in ('Los
+Angeles','Oakland') and t.quarter in (1,2))
+group by(i.item_name,l.city,t.quarter)
+order by t.quarter;
+
+Rollup
+Find the total sales of each item in country in
+each quarter using rollup
+select l.country,i.item_name,t.quarter,sum(s.units_sold)
+as country_sales from salesfact s
+left join items i on s.item_key=i.item_key
+left join loc l on s.loc_key=l.loc_key
+left join Stime t on s.time_key=t.time_key
+group by rollup(l.country,i.item_name,t.quarter);
+
+Find the total sales in country in each quarter
+using rollup
+select l.country,t.quarter,sum(s.units_sold) as
+country_sales from salesfact s
+left join items i on s.item_key=i.item_key
+left join loc l on s.loc_key=l.loc_key
+left join Stime t on s.time_key=t.time_key
+group by rollup(l.country,t.quarter);
+
+
+DrillDown
+
+Find the total units sales of
+each item in each month
+using drill down.
+
+select i.item_name,t.smonth,sum(s.units_sold)
+as month_sales from salesfact s
+left join items i on s.item_key=i.item_key
+left join loc l on s.loc_key=l.loc_key
+left join Stime t on s.time_key=t.time_key
+group by (i.item_name,t.smonth) order by
+t.smonth;
+
+Drill-Down
+
+• Find the total units sales of each item in each
+city using drill down.
+select i.item_name,l.city,sum(s.units_sold) as
+citywise_sales from salesfact s
+left join items i on s.item_key=i.item_key
+left join loc l on s.loc_key=l.loc_key
+left join Stime t on s.time_key=t.time_key
+group by (i.item_name,l.city);
+

@@ -1,0 +1,18 @@
+install.packages("arules")
+install.packages("arulesViz")
+install.packages("datasets")
+
+library(arules)
+library(arulesViz)
+library(datasets)
+
+w1 = read.table("C:/Users/Mithil pawar/OneDrive/Documents/ADBMS/Book1.csv")
+trans = read.transactions("C:/Users/Mithil pawar/OneDrive/Documents/ADBMS/Book.csv",
+                          format="basket", sep = ",");
+itemFrequencyPlot(trans, topN=20, type="absolute")
+rules <- apriori(data = trans, parameter = list(supp=0.001, conf=0.08),
+appearance = list(default="lhs", rhs="mobile"), control = list(verbose=F))
+
+rules <- sort(rules, decreasing = TRUE, by="confidence")
+inspect(rules[1:10])
+plot(rules, jitter=0)

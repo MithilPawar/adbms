@@ -1,0 +1,114 @@
+Create type employee_t as Object(
+  	name varchar2(30),
+    ssn varchar2(30),
+    salary NUMBER,
+    member function raise_sal 
+    	return number
+);
+
+-- TYPE CREATED..
+create type body employee_t as
+    Member function raise_sal return Number is 
+		Begin 
+			return salary*2;
+		end;
+end;
+
+-- TYPE CREATED..
+
+-- Query For the Table Creation:
+
+create table emp2 of employee_t;
+
+-- Add / Insert Elements into the emp2 table
+
+insert into emp2 values(
+    employee_t('Frank','12345',1000)
+);
+insert into emp2 values(
+    employee_t('Onkar','15645',1300)
+);
+insert into emp2 values(
+    employee_t('Adi','154345',3000)
+);
+insert into emp2 values(
+    employee_t('Raju','124545',2000)
+);
+insert into emp2 values(
+    employee_t('AAfan','12655',1600)
+);
+
+-- Select elements from the table
+
+select * from emp2;
+select e.raise_sal() from emp2 e;
+select e.name , e.raise_sal() from emp2 e;
+
+-- DataType: Super type Emp
+
+create type emp as object(
+	eid number, 
+    ename varchar2(30), 
+    emp_addr varchar2(10),
+    doj date,
+    salary number,
+    MEMBER Function cal_sal Return number
+)not final; 
+
+-- Create Body of member function
+
+
+create type body emp as 
+	member function cal_sal return number is 
+	begin 
+		return salary;
+	end;
+end;
+
+create table employee of emp;
+
+insert into employee values(emp(101,'Onkar','Talere','12-May-2020',200000));
+insert into employee values(emp(102,'Adi','Tale','12-May-2010',22300));
+insert into employee values(emp(103,'Om','kale','12-May-2022',2034200));
+insert into employee values(emp(104,'Raju','Goa','12-May-2012',2000));
+insert into employee values(emp(105,'Pandu','Pune','12-May-2000',202300));
+
+select * from employee;
+select e.cal_sal() from employee e;
+select e.ename , e.cal_sal() from employee e;
+
+-- create subtype it is simply we can say that it is inheritance
+-- supertype is emp and subtype is eng
+
+create type eng under emp
+(
+    eng_type varchar2(10),
+    Member function emp_type return varchar2
+);
+
+-- Type Created.
+
+-- create body of the subtype
+create type body eng as
+	Member function emp_type return varchar2 is
+	Begin
+		return 'Engineer';
+	end;
+end;
+
+create table engineer of eng;
+
+-- Insert / Add values into the table
+insert into engineer values(1,'Onkar','Goa','22-Dec-2008',30000,'Sr');
+insert into engineer values(2,'Swapnali','Kolhapur','2-Dec-2008',30000,'Sr');
+insert into engineer values(3,'Aditya','Goa','22-May-2008',30000,'Sr');
+insert into engineer values(4,'Pandu','Dubai','22-Dec-2008',30000,'Sr');
+insert into engineer values(5,'Sneha','Goa','22-Jun-2008',30000,'Sr');
+
+-- select data from engineer table that is inherit emp table
+select * from engineer;
+select e.cal_sal() from engineer e;
+select e.ename , e.cal_sal() from engineer e;
+select e.emp_type() from engineer e;
+select e.ename , e.emp_type() from engineer e;
+select e.ename , e.emp_type() , e.cal_sal() from engineer e;

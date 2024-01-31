@@ -1,0 +1,27 @@
+# a. Create a folder named "RPracticalExam" in your home directory (Linux/Mac) or C: drive (Windows)
+# Replace the path with your actual home directory or C: drive
+dir.create("~/RPracticalExam")  # Linux/Mac
+# dir.create("C:/RPracticalExam")  # Windows
+
+# b. Set the working directory to this folder
+setwd("~/RPracticalExam")  # Linux/Mac
+# setwd("C:/RPracticalExam")  # Windows
+
+# c. Create 4 vectors: EmployeeID, EmployeeName, EmployeeDept, and EmployeeSalary
+EmployeeID <- c(101, 102, 103, 104)
+EmployeeName <- c("John", "Jane", "Bob", "Alice")
+EmployeeDept <- c("IT", "HR", "Finance", "Marketing")
+EmployeeSalary <- c(60000, 55000, 70000, 65000)
+
+# d. Create a dataframe with 4 variables
+employee_df <- data.frame(EmployeeID, EmployeeName, EmployeeDept, EmployeeSalary)
+
+# e. Print data frame
+print(employee_df)
+
+# f. Rename variables (columns) of the dataframe
+colnames(employee_df) <- c("ID", "Name", "Dept", "Salary")
+
+# g. Assign some valid row names to the data frame and print it
+rownames(employee_df) <- c("Emp1", "Emp2", "Emp3", "Emp4")
+print(employee_df)

@@ -1,0 +1,39 @@
+#k means Algorithm
+#install packages
+install.packages("datasets")
+install.packages("stats")
+#library packages
+library(stats)
+library(datasets)
+# Load the Iris dataset
+data(iris)
+iris_data <- iris[, 1:4]  # Consider only the numeric columns
+
+# Check the structure of the dataset
+str(iris_data)
+# Set the seed for reproducibility
+set.seed(123)
+
+# Perform k-means clustering with k=3 (assuming 3 clusters for the Iris dataset)
+kmeans_result <- kmeans(iris_data, centers = 3, nstart = 10)
+
+# Check the cluster assignments
+cluster_assignments <- kmeans_result$cluster
+print(cluster_assignments)
+# Assuming you have a test set with the same structure (4 numeric columns)
+# Create a test set for demonstration purposes
+set.seed(456)
+test_set <- data.frame(
+  Sepal.Length = runif(5, 4, 8),
+  Sepal.Width = runif(5, 2, 4.5),
+  Petal.Length = runif(5, 1, 6),
+  Petal.Width = runif(5, 0.1, 2)
+)
+
+# Check the structure of the test set
+str(test_set)
+# Use the predict function to assign clusters to the test set
+test_set_clusters <- predict(kmeans_result, newdata = test_set)
+print(test_set_clusters)
+
+

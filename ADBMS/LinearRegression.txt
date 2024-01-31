@@ -1,0 +1,16 @@
+> height <- c(151, 174, 138, 186, 128, 136, 179, 163, 152, 131);
+> weight <- c(63, 81, 56, 91, 47, 57, 76, 72, 62, 48);
+
+implementation and analysis of linear regression through graphs
+
+height <- c(151, 174, 138, 186, 128, 136, 179, 163, 152, 131);
+> weight <- c(63, 81, 56, 91, 47, 57, 76, 72, 62, 48);
+>plot(height, weight, pch = 16, cex = 1, col = 'blue', main = 'Height vs Weight', xlab = 'height', ylab='weight')
+> model <- lm(weight ~ height)
+> summary(model)
+>attributes(model)
+>coefficients(model)
+> abline(model)
+>new_data <- data.frame(height = 170);
+> predicted_weight <- predict(model, newdata = new_data)
+>  print(predicted_weight)

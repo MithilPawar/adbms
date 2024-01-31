@@ -1,0 +1,17 @@
+CREATE TABLE my_emp (
+  empno NUMBER,
+  ename VARCHAR2(50),
+  job VARCHAR2(50),
+  sal NUMBER,
+  deptno NUMBER
+);
+
+INSERT INTO my_emp VALUES (101, 'John', 'Manager', 5000, 10);
+INSERT INTO my_emp VALUES (102, 'Alice', 'Analyst', 4500, 20);
+INSERT INTO my_emp VALUES (103, 'Bob', 'Clerk', 3000, 10);
+INSERT INTO my_emp VALUES (104, 'Charlie', 'Manager', 5500, 20);
+INSERT INTO my_emp VALUES (106, 'Dav', 'Analyst', 4800, 10);
+
+SELECT empno,ename,job,sal,deptno,RANK() OVER (PARTITION BY deptno ORDER BY sal DESC) AS emp_rank FROM my_emp;
+
+SELECT empno,ename,job,sal,deptno,DENSE_RANK() OVER (PARTITION BY deptno ORDER BY sal DESC) AS emp_rank_within_department FROM my_emp;

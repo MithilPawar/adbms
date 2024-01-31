@@ -1,0 +1,17 @@
+# 1. Create a folder named "RPractical" in your home directory (Linux/Mac) or C: drive (Windows)
+# Replace the path with your actual home directory or C: drive
+dir.create("~/RPractical")  # Linux/Mac
+# dir.create("C:/RPractical")  # Windows
+
+# 2. Set the working directory to this folder
+setwd("~/RPractical")  # Linux/Mac
+# setwd("C:/RPractical")  # Windows
+
+# 3. Load the airquality dataset in R
+data(airquality)
+
+# 4. Preview the first 5 rows of the airquality dataset
+head(airquality, 5)
+
+# 5. Rename the attribute Month to "Month No"
+names(airquality)[names(airquality) == "Month"] <- "Month No"

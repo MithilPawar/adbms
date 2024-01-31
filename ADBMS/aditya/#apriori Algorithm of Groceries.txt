@@ -1,0 +1,14 @@
+#apriori Algorithm
+# 1. Install and load the arules package
+install.packages("arules")
+library(arules)
+
+# 2. Load the groceries dataset as transactions
+data("Groceries")
+transactions <- as(Groceries, "transactions")
+
+# 3. Apply the Apriori algorithm with 70% Support and 80% Confidence
+rules <- apriori(transactions, parameter = list(support = 0.7, confidence = 0.8))
+
+# Display the rules
+inspect(rules)

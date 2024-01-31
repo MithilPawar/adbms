@@ -1,0 +1,190 @@
+create table RollupTest(id int primary key, 
+name varchar(50), 
+gender varchar(20), 
+salary int, 
+department varchar(50))
+
+insert into RollupTest values(1,'moly','male',5000,'sales')
+insert into RollupTest values(2,'jimmy','female',6000,'HR')
+insert into RollupTest values(3,'katal','female',7500,'IT')
+insert into RollupTest values(4,'lenda','male',6500,'markating')
+insert into RollupTest values(5,'shnana','female',5500,'finance')
+insert into RollupTest values(6,'mike','male',8000,'sales')
+insert into RollupTest values(7,'tony','male',7200,'HR')
+insert into RollupTest values(8,'lorry','female',6600,'IT')
+insert into RollupTest values(9,'kene','female',5400,'markating')
+insert into RollupTest values(10,'hary','female',6300,'finance')
+insert into RollupTest values(11,'potter','male',5700,'sales')
+insert into RollupTest values(12,'zim kerry','male',7000,'HR')
+insert into RollupTest values(13,'mikel','female',7100,'IT')
+insert into RollupTest values(14,'jakson','female',6800,'markating')
+insert into RollupTest values(15,'warden','male',5000,'finance')
+
+create table emp(id int primary key, 
+name varchar(50), 
+gender varchar(20), 
+salary int, 
+department varchar(50))
+
+insert into emp values(1,'Rupali','female',10000,'IT')
+insert into emp values(2,'Rani','female',6000,'HR')
+insert into emp values(3,'Zheny','female',7500,'IT')
+insert into emp values(4,'Raju','male',6500,'markating')
+insert into emp values(5,'Aditi','female',5500,'finance')
+insert into emp values(6,'IronMan','male',8000,'sales')
+insert into emp values(7,'Chris','male',7200,'HR')
+insert into emp values(8,'Sita','female',6600,'finance')
+insert into emp values(9,'Anarkali','female',5400,'markating')
+insert into emp values(10,'Siddi','female',6300,'finance')
+insert into emp values(11,'Tim David','male',5700,'sales')
+insert into emp values(12,'Raju','male',7000,'HR')
+insert into emp values(13,'Adnya','female',7100,'IT')
+insert into emp values(14,'Aditya','male',6800,'markating')
+insert into emp values(15,'Onkar','male',5000,'IT')
+
+select department, sum(salary) from emp Group By department
+
+select department, sum(salary) from emp Group By rollup(department)
+
+select coalesce(department, 'Total'), sum(salary) from emp Group By rollup(department)
+
+select coalesce(department, 'All Departments'), sum(salary) from emp Group By rollup(department,gender)
+
+select coalesce(department, 'Total'), sum(salary) from emp Group By rollup(department, gender)
+
+select coalesce(department, 'Total'), sum(salary) from emp Group By cube(department, gender)
+
+select coalesce(department, 'Total'),gender, sum(salary) from emp Group By cube(department, gender)
+
+select coalesce(department, 'Total',gender), sum(salary) from emp Group By cube(department, gender)
+
+select * from emp
+
+select department, sum(salary) from emp Group By department
+
+select department, sum(salary) from emp Group By rollup(department)
+
+select coalesce(department, 'Total'), sum(salary) from emp Group By rollup(department)
+
+select coalesce(department, 'All Departments'), sum(salary) from emp Group By rollup(department,gender)
+
+select coalesce(department, 'Total'), sum(salary) from emp Group By rollup(department, gender)
+
+select coalesce(department, 'Total'), sum(salary) from emp Group By cube(department, gender)
+
+select coalesce(department, 'Total'),gender, sum(salary) from emp Group By cube(department, gender)
+
+select coalesce(department, 'Total',gender), sum(salary) from emp Group By cube(department, gender)
+
+select coalesce(department, 'Sub Total'),coalesce(gender,'Total'), sum(salary) from emp Group By Rollup(department, gender)
+
+select coalesce(department, 'Sub Total'),coalesce(gender,'Total'), sum(salary) from emp Group By cube(department, gender)
+
+select department, avg(salary) from emp Group By department
+
+select department, avg(salary) from emp Group By rollup(department)
+
+select coalesce(department, 'Total'), avg(salary) from emp Group By rollup(department)
+
+
+select coalesce(department, 'All Departments'), avg(salary) from emp Group By rollup(department,gender)
+
+select coalesce(department, 'Total'), avg(salary) from emp Group By rollup(department, gender)
+
+select coalesce(department, 'Sub Total'),coalesce(gender,'Total'), avg(salary) from emp Group By Rollup(department, gender)
+
+select coalesce(department, 'Total'), avg(salary) from emp Group By cube(department, gender)
+
+select coalesce(department, 'Sub Total'),coalesce(gender,'Total'), avg(salary) from emp Group By cube(department, gender)
+
+select coalesce(department, 'Total',gender), avg(salary) from emp Group By cube(department, gender)
+
+select department, avg(salary) from emp Group By department
+
+select coalesce(department, 'Total',gender), avg(salary) from emp Group By cube(department, gender)
+
+select min(salary) from emp
+
+select department, min(salary) from emp Group By department
+
+
+select department, max(salary) from emp Group By rollup(department)
+
+select department, max(salary) from emp Group By department
+
+select department, min(salary) from emp Group By rollup(department)
+
+create table Employee( 
+    empid int primary key, 
+    empname varchar(50), 
+    deptid int, 
+    salary int 
+)
+
+insert into Employee values(1,'Onkar',100,100000)
+insert into Employee values(2,'Aditya',200,345000)
+insert into Employee values(3,'Vishal',300,890000)
+insert into Employee values(4,'Rahul',100,780000)
+insert into Employee values(5,'Karan',300,500000)
+insert into Employee values(6,'Arjun',300,450000)
+insert into Employee values(7,'JrNTR',200,980000)
+insert into Employee values(8,'Allu',200,990000)
+
+
+select empid,empname,deptid,rank() over(order by salary desc) as rank from Employe
+
+select empid,empname,deptid,salary,rank() over(order by salary desc) as rank from Employe
+
+select empid,empname,deptid,salary,rank() over(order by salary desc) as rank, 
+    dense_rank() over(order by salary desc) as dense_rank 
+from Employe
+
+select empid,empname,deptid,salary,rank() over(order by salary desc) as rank, 
+    dense_rank() over(order by salary desc) as dense_rank, 
+    row_number() over(order by salary desc) as rownumber 
+from Employe
+
+select empid,empname,deptid,salary,rank() over(order by salary desc) as rank, 
+    ntile(3) over(order by salary desc) as ntile 
+from Employe
+
+select empid,empname,deptid,salary,rank() over(partition by deptid order by salary desc) as rank, 
+    dense_rank() over(partition by deptid order by salary desc) as dense_rank, 
+    row_number() over(partition by deptid order by salary desc) as rownumber 
+from Employe
+
+select * from( 
+    select empid, empname, deptid, salary , rank()  
+    over(partition by deptid order by salary desc)  
+    as rank from Employe a 
+) where rank = 1
+
+select * from( 
+    select empid, empname, deptid, salary , dense_rank()  
+    over(partition by deptid order by salary asc)  
+    as rank from Employe a 
+) where rank = 1
+
+select * from( 
+    select empid, empname, deptid, salary , dense_rank()  
+    over(partition by deptid order by salary asc)  
+    as rank from Employe a 
+) where rank = 2
+
+select * from( 
+    select empid, empname, deptid, salary , dense_rank()  
+    over(partition by deptid order by salary asc)  
+    as rank from Employe a 
+) where rank = 3
+
+select empid, empname, deptid, salary , dense_rank()  
+    over(partition by deptid order by salary asc)  
+    as rank from Employe
+
+select empid, empname, deptid, salary , dense_rank()  
+    over(partition by deptid order by salary asc)  
+    as Dense_rank from Employe
+
+select empid, empname, deptid, salary , dense_rank()  
+    over(partition by deptid order by salary asc)  
+    as dense_rank from Employe

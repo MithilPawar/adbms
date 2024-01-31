@@ -1,0 +1,12 @@
+#Hierarchical clustering using dendogram
+# Load the Iris dataset
+data(iris)
+
+# Extract numeric columns
+iris_data <- iris[, 1:4]
+
+# Perform hierarchical clustering
+hclust_result <- hclust(dist(iris_data), method = "ward.D2")
+
+# Visualize the dendrogram
+plot(hclust_result, main = "Hierarchical Clustering Dendrogram", xlab = "Observations", sub = NULL, cex = 0.8)

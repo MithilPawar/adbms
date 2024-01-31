@@ -1,0 +1,23 @@
+vec <- c(22, NA, 45, 30, NA, 50, 20);
+> sec_element <- vec[2]
+> sec_element
+[1] NA
+> na_count <- sum(is.na(vec))
+> na_count
+[1] 2
+> non_naCount <- sum(!is.na(vec))
+> non_naCount
+[1] 5
+> mean <- mean(vec)
+> mean
+[1] NA
+> vec_without_na <- vec[!is.na(vec)]
+> meanVec <- mean(vec_without_na)
+> meanVec
+[1] 33.4
+> medianVec <- median(vec_without_na)
+> medianVec
+[1] 30
+> replaceVal <- ifelse(is.na(vec), medianVec, vec)
+> replaceVal
+[1] 22 30 45 30 30 50 20

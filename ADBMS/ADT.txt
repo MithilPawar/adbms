@@ -1,0 +1,30 @@
+#Abstract data type
+CREATE OR REPLACE TYPE passenger_type AS OBJECT (
+    PID int,
+    PName varchar2(20),
+    Address varchar2(100),
+    Destination varchar2(50),
+    Age int
+);
+
+CREATE TABLE Passenger_dtls OF passenger_type;
+INSERT INTO Passenger_dtls VALUES(passenger_type(101, 'Mithil', 'Rajapur', 'Ratnagiri', 22));
+SELECT * FROM Passenger_dtls;
+
+
+
+CREATE OR REPLACE TYPE Address AS OBJECT(
+    address1 varchar(20),
+    address2 varchar(20),
+    states varchar(20),
+    city varchar(20),
+    pincode int
+);
+CREATE TABLE Customer(
+    cid int,
+    cname varchar(20),
+    adds Address
+);
+insert into Customer values(4,'A',Address('a1','a2','H','Mumbai',416403));
+select COUNT(cid) from Customer c where c.adds.states='M';
+

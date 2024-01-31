@@ -1,0 +1,32 @@
+#Navie Bayesaian
+# Install and load necessary packages
+install.packages("e1071")
+library(e1071)
+
+# Load the Iris dataset
+data(iris)
+
+# Split the dataset into training and test sets
+set.seed(123)
+train_indices <- sample(1:nrow(iris), 0.7 * nrow(iris))
+train_data <- iris[train_indices, ]
+test_data <- iris[-train_indices, ]
+
+# Train the Naive Bayes classifier
+nb_model <- naiveBayes(Species ~ ., data = train_data)
+
+# Visualize the output
+print(nb_model)
+
+# Predict the test data
+predictions <- predict(nb_model, test_data)
+
+# Verify the results
+conf_matrix <- table(predictions$class, test_data$Species)
+print("Confusion Matrix:")
+print(conf_matrix)
+
+# Calculate accuracy
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+print(paste("Accuracy:", accuracy))
+

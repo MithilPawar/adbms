@@ -1,0 +1,23 @@
+CREATE TABLE emp (
+  empno NUMBER,
+  ename VARCHAR2(50),
+  job VARCHAR2(50),
+  sal NUMBER,
+  deptno NUMBER,
+  sales_year Number,
+  sales Number
+);
+
+INSERT INTO emp VALUES (101, 'John', 'Manager', 5000, 10,2000,500);
+INSERT INTO emp VALUES (102, 'Alice', 'Analyst', 4500, 20,2001,800);
+INSERT INTO emp VALUES (103, 'Bob', 'Clerk', 3000, 10,2002,300);
+INSERT INTO emp VALUES (104, 'Charlie', 'Manager', 5500, 20,2004,900);
+INSERT INTO emp VALUES (105, 'David', 'Analyst', 4800, 10,2005,700);
+
+select empno,deptno,sales_year,sales,lead(sales) over (order by sales_year asc) as next_year_sale from emp;
+
+select empno,deptno,sales_year,sales,lag(sales) over (order by sales_year asc) as previous_year_sale from emp;
+
+select empno,deptno,sales,min(sales) keep (dense_rank first order by sales) over (partition by deptno) as First from emp order by deptno,sales;
+
+select empno,deptno,sales,max(sales) keep (dense_rank last order by sales) over (partition by deptno) as Last from emp order by deptno,sales;

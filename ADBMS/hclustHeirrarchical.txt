@@ -1,0 +1,11 @@
+
+install.packages("hclust")
+install.packages("dplyr")
+library(dplyr)
+>df <- iris
+>print(df)
+>iris_features <- iris[, 1:4]
+> d <- dist(iris_features)
+> hc <- hclust(d, method="complete");
+>plot(hc)
+> plot(hc, cex = 0.1, hang = -1)

@@ -1,0 +1,99 @@
+# "range Partition"
+
+Create table emp(
+    empid int,
+    empname varchar(20),
+    gender varchar (20),
+    age int
+)
+    partition by range(age)
+(
+    partition p1 values less than(20),
+    partition p2 values less than(25),
+    partition p3 values less than(30)
+);
+
+#"inserting values in emp table"
+
+insert into emp values(1,'pranay','m',23);
+insert into emp values(2,'ruchita','f',11);
+insert into emp values(3,'rasika','f',22);
+insert into emp values(4,'mithil','m',22);
+insert into emp values(5,'om','m',28);
+
+select * from emp;
+
+select * from emp partition(pa1);
+
+alter table emp add partition p4 values less than(35);
+
+insert into emp values(6,'omkar','m',31);mp p
+insert into emp values(7,'raj','m',33);
+
+select * from emp partition(p4);
+
+
+# "view all partition"
+select partition_name from user_tab_partitions where table_name='emp'
+select table_name,partitioning_type,status from user_part_tables where table_name='emp';
+
+#"split partition"
+alter table emp split partition p1 into(partition pa1 values less than(15),partition pa2);
+
+select * from emp where gender='m' AND age between 25 and 35;
+
+select * from emp partition(p4) order by age;
+
+*********************************************************
+# "list Partition"
+
+Create table test(
+    testid int,
+    bg varchar(10),
+    name varchar(20),
+    gender varchar (20),
+    tresult varchar(10)
+)
+    partition by list(tresult)
+(
+    partition p1 values ('p'),
+    partition p2 values ('n')
+    
+);
+insert into test values(1,'A','pranay','m','p');
+insert into test values(2,'B','ruchita','f','n');
+insert into test values(3,'A','rasika','f','p');
+insert into test values(4,'AB','mithil','m','n');
+insert into test values(5,'O','om','m','n');
+
+alter table test modify partition p1 add values('positive');
+insert into test values(10,'Ab','pranay','m','positive');
+select * from test partition(p1);
+
+**************************************************************
+#"hash"
+    
+Create table emp(
+    empid int,
+    empname varchar(20),
+    gjoindate date,
+    age int,
+    salary int
+)
+    partition by hash(salary)
+(
+    partition p1,
+    partition p2,
+    partition p3 
+);
+
+#"inserting values in emp table"
+
+insert into emp values(1,'pranay','21-jan-2002',23,20000);
+insert into emp values(2,'ruchita','21-jan-2002',11,50000);
+insert into emp values(3,'rasika','21-feb-2002',22,5000);
+insert into emp values(4,'mithil','20-dec-2004',22,8000);
+insert into emp values(5,'om','07-may-2005',28,45625);
+
+select * from emp partition (p3) order by salary;
+

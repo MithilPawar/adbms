@@ -1,0 +1,19 @@
+# a. Create height and weight vectors
+height <- c(151, 174, 138, 186, 128, 136, 179, 163, 152, 131)
+weight <- c(63, 81, 56, 91, 47, 57, 76, 72, 62, 48)
+
+# b. Create relationship model & get the coefficients using linear model function of R(lm)
+model <- lm(weight ~ height)
+
+# c. Get the summary of the relationship
+summary(model)
+
+# d. Predict the weight for a new person with height 170
+new_height <- 170
+predicted_weight <- predict(model, data.frame(height = new_height))
+print(paste("Predicted weight for height 170:", predicted_weight))
+
+# e. Visualize the relationship
+plot(height, weight, main = "Linear Regression", xlab = "Height", ylab = "Weight", pch = 16, col = "blue")
+abline(model, col = "red")
+legend("topleft", legend = "Regression Line", col = "red", lty = 1)

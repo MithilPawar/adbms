@@ -1,0 +1,20 @@
+# 1. Create a folder named "RPractical" in your home directory (Linux/Mac) or C: drive (Windows)
+# Replace the path with your actual home directory or C: drive
+dir.create("~/RPractical")  # Linux/Mac
+# dir.create("C:/RPractical")  # Windows
+
+# 2. Set the working directory to this folder
+setwd("~/RPractical")  # Linux/Mac
+# setwd("C:/RPractical")  # Windows
+
+# 3. Create a vector
+my_vector <- c(3, 6, NA, 12, 7, NA, 5, 8, 10)
+
+# 4. Impute the average in the above vector
+mean_value <- mean(my_vector, na.rm = TRUE)
+imputed_vector <- ifelse(is.na(my_vector), mean_value, my_vector)
+
+# 5. Display the above-created mean
+print(paste("Original Vector: ", my_vector))
+print(paste("Imputed Vector: ", imputed_vector))
+print(paste("Mean Value: ", mean_value))

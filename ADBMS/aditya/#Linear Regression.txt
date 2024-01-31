@@ -1,0 +1,39 @@
+#Linear Regression
+#install Packages 
+install.packages("ggplot2")
+#load Packages
+library(ggplot2)
+# Values of height and weight
+height <- c(151, 174, 138, 186, 128, 136, 179, 163, 152, 131)
+weight <- c(63, 81, 56, 91, 47, 57, 76, 72, 62, 48)
+
+# Combine data into a data frame
+data <- data.frame(height, weight)
+# Fit linear regression model
+lm_model <- lm(weight ~ height, data = data)
+
+# Print summary of the regression model
+summary(lm_model)
+# Plot the data points
+plot(height, weight, main = "Linear Regression", xlab = "Height", ylab = "Weight", pch = 16, col = "blue")
+
+# Add regression line to the plot
+abline(lm_model, col = "red")
+
+# Add a legend
+legend("topleft", legend = "Regression Line", col = "red", lty = 1)
+
+# Residuals vs Fitted plot
+plot(lm_model, which = 1)
+
+# Normal Q-Q plot
+plot(lm_model, which = 2)
+
+# Scale-Location plot
+plot(lm_model, which = 3)
+
+# Residuals vs Leverage plot
+plot(lm_model, which = 5)
+
+
+

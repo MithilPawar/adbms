@@ -1,0 +1,26 @@
+
+//Creating data from from given data
+DataFram <- data.frame(name=c('Alex', 'lilly', 'mark', 'oliver', 'martha', 'lukas', 'carolini'), working = c('yes', 'no', 'no', 'yes', 'yes', 'no', 'yes'))
+//Printing data frame
+DataFram
+
+// display rows and column of data frame
+dim(DataFram)
+
+//display only number of column in data frame
+ncol(DataFram)
+
+//display only number of rows in data frame
+nrow(DataFram)
+
+// what class of data is in each column
+summary(DataFram)
+
+// Access only working columns and display
+DataFram $working
+
+// stores this data in excel file
+install.packages('openxlsx')
+library(openxlsx)
+excel_file_path <- "C:/Users/Mithil pawar/OneDrive/Documents/ADBMS/DataFram.xlsx"
+write.xlsx(DataFram, excel_file_path, rowNames = FALSE)

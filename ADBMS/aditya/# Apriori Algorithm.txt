@@ -1,0 +1,18 @@
+# Create transactions dataset
+transactions <- read.transactions(text = "TransId Items
+1 milk, egg, bread, chip
+2 egg, popcorn, chip, beer
+3 egg, bread, chip
+4 milk, egg, bread, popcorn, chip, beer
+5 milk, bread, beer
+6 egg, bread, beer
+7 milk, bread, chip
+8 milk, chip, beer
+9 milk, egg, bread, butter, chip
+10 milk, egg, butter, chi", format = "basket", sep = ",")
+
+# Mine association rules with 30% support and 80% confidence
+association_rules <- apriori(transactions, parameter = list(support = 0.3, confidence = 0.8))
+
+# Display the rules
+inspect(association_rules)

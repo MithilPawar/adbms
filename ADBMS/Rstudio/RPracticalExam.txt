@@ -1,0 +1,22 @@
+install.packages('dplyr')
+library(dplyr)
+EmployeeId <- c(101, 102, 103, 104);
+EmployeeName = c('Alice', 'Bob', 'Charlie', 'David');
+EmployeeDept = c('HR', 'IT', 'Marketing', 'Sales');
+EmployeeSalary = c(50000, 60000, 55000, 70000);
+
+my_data <- data.frame(
+  EmployeeId = c(101, 102, 103, 104),
+  EmployeeName = c('Alice', 'Bob', 'Charlie', 'David'),
+  EmployeeDept = c('HR', 'IT', 'Marketing', 'Sales'),
+  EmployeeSalary = c(50000, 60000, 55000, 70000)
+)
+
+# Printing the data frame
+print(my_data)
+
+#Renaming the columns name
+dfdata = select(my_data, 'EmpID' = 'EmployeeId')
+
+# Assigning row names to the data frame
+rownames(my_data) <- c('Person1', 'Person2', 'Person3', 'Person4')

@@ -1,0 +1,27 @@
+Setting working directory
+setwd("C:/Users/Mithil pawar/OneDrive/Documents/RDemo")
+
+check whether the directory has been set
+getwd()
+
+list the content of directory
+list.files("C:/Users/Mithil pawar/OneDrive/Documents/RDemo")
+
+start general help and brows through its different sections
+help.start()
+
+install a package name “vcd”
+install.packages('vcd')
+
+Access help of package “vcd” and go through the content of package
+help(package = "vcd")
+
+load the package vcd
+library(vcd)
+
+check the data set iris
+View(iris)
+
+Print the iris
+
+> print(iris)
